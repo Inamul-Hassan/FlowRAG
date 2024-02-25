@@ -1,0 +1,11 @@
+{
+  "json":{
+    "loader": "SimpleDirectoryReader",
+    "transformer":[{
+      "type":"JSONParser",
+      "config":{
+      }     
+    }]
+
+  }
+}

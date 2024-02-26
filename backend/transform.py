@@ -39,3 +39,7 @@ def get_nodes_using_recursive_character_text_splitter(documents: list[Document],
     recursive_character_text_splitter = LangchainNodeParser(
         RecursiveCharacterTextSplitter(**config))
     return recursive_character_text_splitter.get_nodes_from_documents(documents)
+
+
+if __name__ == "__main__":
+    pass

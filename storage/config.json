@@ -11,7 +11,7 @@
     "transformer":[
       {"type":"SentenceSplitter",
       "library":"llama-index",
-      "imports":["from llama_index.core.readers import Document","from llama_index.core.node_parser import SentenceSplitter"],
+      "imports":["from llama_index.core.node_parser import SentenceSplitter"],
       "config":{
         "separator": " ",
         "chunk_size":  "1024",
@@ -20,7 +20,7 @@
       }},
       {"type":"SentenceWindowNodeParser",
       "library":"llama-index",
-      "imports":["import nltk","from llama_index.core.readers import Document","from llama_index.core.node_parser import SentenceWindowNodeParser"],
+      "imports":["import nltk","from llama_index.core.node_parser import SentenceWindowNodeParser"],
       "config":{
         "window_size": 3
       }},
@@ -34,6 +34,6 @@
         
       }}
     ]
-    
+
   }
 }

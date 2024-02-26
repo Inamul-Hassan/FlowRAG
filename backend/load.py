@@ -1,7 +1,7 @@
 from llama_index.core import SimpleDirectoryReader
 
-SUPPORTED_EXTENSIONS = [".hwp", ".pdf", ".docx", ".pptx", ".ppt", ".pptm", ".jpg",
-                        ".png", ".jpeg", ".mp3", ".mp4", ".csv", ".epub", ".md", ".mbox", ".ipynb", ".txt", ".json"]
+SUPPORTED_EXTENSIONS = ["hwp", "pdf", "docx", "pptx", "ppt", "pptm", "jpg",
+                        "png", "jpeg", "mp3", "mp4", "csv", "epub", "md", "mbox", "ipynb", "txt", "json"]
 
 # validating user input
 LOADER_EXTENSTIONS_MAPPING = {
@@ -11,8 +11,14 @@ LOADER_EXTENSTIONS_MAPPING = {
 
 
 def validate_input_file(input_file: str) -> str:
-    extenstion = input_file.split(".")[-1]
-    pass
+    try:
+        extenstion = input_file.split(".")[-1]
+    except Exception as e:
+        raise ValueError(f"Invalid input file: {e}")
+    if extenstion.casefold() not in SUPPORTED_EXTENSIONS:
+        raise ValueError(f"Unsupported file type: {extenstion}")
+    else:
+        return extenstion.lower()
 
 
 # Load

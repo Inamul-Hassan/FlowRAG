@@ -31,8 +31,17 @@
         "chunk_size":  "4000",
         "chunk_overlap":"200",
         "separator": ["\n\n", "\n", " ", ""]
-        
-      }}
+      }},
+      {
+        "type": "SemanticSplitterNodeParser",
+        "library": "llama-index",
+        "imports": ["from llama_index.core.node_parser import SemanticSplitterNodeParser", "from llama_index.core.base.embeddings.base import BaseEmbedding"],
+        "config": {
+          "buffer_size": "100",
+          "include_metadata": "True",
+          "include_prev_next_rel": "True"
+        }
+      }
     ]
 
   }

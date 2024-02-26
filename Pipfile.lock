@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ae7b423b142fb8db28b4b8b57dd36eaf30b446e27a1cf72585ef3b79f251f71b"
+            "sha256": "d8277c827e07df14d2641264270bd27dff1877df8b51f4a96151f6e297cd116f"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -2424,6 +2424,14 @@
             "index": "pypi",
             "markers": "python_version >= '3.8' and python_full_version != '3.9.7'",
             "version": "==1.31.1"
+        },
+        "streamlit-antd-components": {
+            "hashes": [
+                "sha256:5ae28496127202ed266ea167649436a15f3d548a4805ee5d992c6fc0fe103fd6"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.8'",
+            "version": "==0.3.2"
         },
         "sympy": {
             "hashes": [

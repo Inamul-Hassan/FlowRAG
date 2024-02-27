@@ -6,6 +6,7 @@ from pages import pipeline
 st.title("FlowRAG")
 st.caption("A simple RAG pipeline builder using langchain and llama-Index")
 
+
 st.markdown("## Data")
 
 st.write("- The first step in the creation of a RAG pipeline is to define all the supported data formats/sources.")
@@ -40,3 +41,8 @@ if st.session_state["FormSubmitter:is_data_source_selected-Get Started"]:
         st.switch_page("pages/pipeline.py")
     # st.write(selected)
     # st.write(st.session_state)
+
+
+# Debug
+with st.expander("Debug"):
+    st.write(st.session_state)

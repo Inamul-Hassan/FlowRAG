@@ -1,5 +1,5 @@
 import sys
-sys.path.append('E:\Python\Directory\FlowRAG-main')
+sys.path.append(r'C:\Users\vishal\Documents\AI\RAG pipeline\FlowRAG')
 
 print(sys.path)
 

@@ -43,11 +43,19 @@ def validate_input_file(input_file: str) -> str:
 """
 
 
-reader = SimpleDirectoryReader(
-    input_dir="storage/data",
-)
+def get_docs_using_SimpleDirectoryReader(input_dir: str) -> SimpleDirectoryReader:
+    reader = SimpleDirectoryReader(
+        input_dir=input_dir,
+    )
+    docs = reader.load_data()
+    return docs
 
-docs = reader.load_data()
-print(f"Loaded {len(docs)} docs")
 
-print(type(docs[0]))
+if __name__ == "__main__":
+    reader = SimpleDirectoryReader(
+        input_dir="storage/data",
+    )
+    docs = reader.load_data()
+    print(f"Loaded {len(docs)} docs")
+
+    print(type(docs[0]))

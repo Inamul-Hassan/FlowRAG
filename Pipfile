@@ -8,6 +8,9 @@ streamlit = "*"
 llama-index = "*"
 langchain = "*"
 streamlit-antd-components = "*"
+llama-index-embeddings-huggingface = "*"
+llama-index-embeddings-gemini = "*"
+llama-index-llms-gemini = "*"
 
 [dev-packages]
 

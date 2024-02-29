@@ -1,0 +1,29 @@
+LLMs -------------------------------------------------------------------------
+1. OpenAI
+2. Gemini - Tested | Working fine | Finalized
+3. Anthropic
+4. Ollama (llama)
+5. MistralAI
+
+Embedding --------------------------------------------------------------------
+1. OpenAI
+2. Gemini - Tested | Working fine | Finalized
+3. HuggingFace - Tested | Working fine | Finalized
+
+Loader -----------------------------------------------------------------------
+1. SimpleDirectoryReader - Tested | Working fine | Finalized
+
+Transformer ------------------------------------------------------------------
+1. SentenceSplitter
+2. SentenceWindowNodeParser
+3. RecursiveCharacterTextSplitter - Tested | Working fine | Finalized
+4. SemanticSplitterNodeParser - Tested | Few conflicts
+
+Index ------------------------------------------------------------------------
+1. VectorStoreIndex - Tested | Working fine | Finalized
+2. SummaryIndex
+
+DB ---------------------------------------------------------------------------
+
+
+Querying ---------------------------------------------------------------------

@@ -25,6 +25,10 @@ Index ------------------------------------------------------------------------
 
 DB ---------------------------------------------------------------------------
 1. ChromaDb -
-2. Qdrant (Local,Online) -
+2. Qdrant (Local, Online) -
 
 Querying ---------------------------------------------------------------------
+1. Retriever
+    1.1 VectorIndexRetriever - Tested | Working fine | Finalized
+2. Query Engine
+    2.1 RetrieverQueryEngine - Tested | Working fine | Finalized

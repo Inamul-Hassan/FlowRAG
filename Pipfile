@@ -11,6 +11,9 @@ streamlit-antd-components = "*"
 llama-index-embeddings-huggingface = "*"
 llama-index-embeddings-gemini = "*"
 llama-index-llms-gemini = "*"
+chromadb = "*"
+qdrant-client = "*"
+llama-index-vector-stores-qdrant = "*"
 
 [dev-packages]
 

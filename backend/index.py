@@ -7,6 +7,7 @@ from llama_index.vector_stores.chroma import ChromaVectorStore
 from llama_index.vector_stores.qdrant import QdrantVectorStore
 import chromadb
 from qdrant_client import QdrantClient
+from llama_index.core.vector_stores.types import BasePydanticVectorStore
 
 import os
 from typing import Dict
@@ -15,18 +16,29 @@ load_dotenv()
 
 
 def save_to_chromadb(collection_name:str)->StorageContext:
+    """
+    PresistentClient by default saves the data in the storage/chromadb folder
+    """
     db = chromadb.PersistentClient(path="storage/chromadb")
     chroma_collection = db.get_or_create_collection(name=collection_name)
     
     vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
     storage_context = StorageContext.from_defaults(vector_store=vector_store)
     return storage_context
+
+def load_from_chromadb(collection_name:str,embedding_model)->BasePydanticVectorStore:
+    db = chromadb.PersistentClient(path="storage/chromadb")
+    chroma_collection = db.get_or_create_collection(name=collection_name)
+    vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
+    vector_index = VectorStoreIndex.from_vector_store(vector_store=vector_store,embed_model=embedding_model)
+    return vector_index
     
 def save_to_qdrant(collection_name:str,isLocal:bool=True,config:Optional[Dict]=None)->StorageContext:
     if isLocal:
         client = QdrantClient(location=":memory:",path="storage/qdrant")
     else:
         client = QdrantClient(**config)
+    QdrantVectorStore()
     vector_store = QdrantVectorStore(client=client, collection_name=collection_name)
     storage_context = StorageContext.from_defaults(vector_store=vector_store)
     return storage_context

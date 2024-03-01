@@ -24,11 +24,11 @@ Index ------------------------------------------------------------------------
 2. SummaryIndex -
 
 DB ---------------------------------------------------------------------------
-1. ChromaDb -
+1. ChromaDb - Tested | Working fine | Finalized
 2. Qdrant (Local, Online) -
 
 Querying ---------------------------------------------------------------------
-1. Retriever
+1. Retriever [Issue with retrival not working properly have to test again]
     1.1 VectorIndexRetriever - Tested | Working fine | Finalized
 2. Query Engine
     2.1 RetrieverQueryEngine - Tested | Working fine | Finalized

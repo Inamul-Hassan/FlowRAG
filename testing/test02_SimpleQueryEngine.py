@@ -35,7 +35,7 @@ vector_index = index.get_index_using_VectorStoreIndex(nodes=nodes,embedding_mode
 
 # Query the index
 query_engine = query_using_RetrieverQueryEngine(index = vector_index, llm = llm, config = {"similarity_top_k": 3, "response_mode": "refine"})
-query_response =  query_engine.query("what is vieweb?")
+query_response =  query_engine.query("how many grad school does the author apply to?")
 
 
 # print(retriever_response)

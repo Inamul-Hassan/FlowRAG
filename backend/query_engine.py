@@ -19,6 +19,7 @@ def query_using_RetrieverQueryEngine(index: BaseIndex, llm: LLM, config: dict) -
     }
     '''
     retriever = VectorIndexRetriever(index = index, similarity_top_k = config["similarity_top_k"])
+    # print(retriever.retrieve("where did he complete his graduation?"))
     response_synthesizer = get_response_synthesizer(response_mode = config["response_mode"])
     query_engine = RetrieverQueryEngine.from_args(retriever = retriever, llm = llm, response_synthesizer = response_synthesizer)
     return query_engine

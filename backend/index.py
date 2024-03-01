@@ -14,6 +14,20 @@ from typing import Dict
 from dotenv import load_dotenv
 load_dotenv()
 
+"""
+TODO
+Have to refactor the code
+-> Current implementation
+   we have two seperate functions for saving and loading from databases.
+   But while loading we dont support other indexing methods
+   either we have to support that or think of a better solution
+-> Better solution
+   have seperate functions for each indexing method to create index from vector_store and nodes
+   if created from nodes, it will take in nodes and storage_context(if applicable)
+   if created from vector_store, it will take in vector_store
+"""
+
+
 
 def save_to_chromadb(collection_name:str)->StorageContext:
     """
@@ -35,13 +49,22 @@ def load_from_chromadb(collection_name:str,embedding_model)->BasePydanticVectorS
     
 def save_to_qdrant(collection_name:str,isLocal:bool=True,config:Optional[Dict]=None)->StorageContext:
     if isLocal:
-        client = QdrantClient(location=":memory:",path="storage/qdrant")
+        client = QdrantClient(path="storage/qdrant")
     else:
         client = QdrantClient(**config)
-    QdrantVectorStore()
     vector_store = QdrantVectorStore(client=client, collection_name=collection_name)
     storage_context = StorageContext.from_defaults(vector_store=vector_store)
     return storage_context
+
+def load_from_qdrant(collection_name:str,embedding_model,isLocal:bool=True,config:Optional[Dict]=None)->StorageContext:
+    if isLocal:
+        client = QdrantClient(path="storage/qdrant")
+    else:
+        client = QdrantClient(**config)
+    vector_store = QdrantVectorStore(client=client, collection_name=collection_name)
+    vector_index = VectorStoreIndex.from_vector_store(vector_store=vector_store,embed_model=embedding_model)
+    return vector_index
+
 
 def get_index_using_VectorStoreIndex(nodes: Sequence[BaseNode],embedding_model,storage_context:StorageContext=None) -> VectorStoreIndex:
     vector_index = VectorStoreIndex(nodes=nodes,embed_model=embedding_model,storage_context=storage_context)

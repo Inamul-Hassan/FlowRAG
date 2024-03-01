@@ -12,12 +12,14 @@ from llama_index.core import Settings
 
 from dotenv import load_dotenv
 load_dotenv()
+from util import log_time
 
 # Load the models
 embedding_model = embedding.embed_using_GeminiEmbedding(model_name="models/embedding-001")
 llm = Gemini(model_name="models/gemini-pro")
 Settings.llm = Gemini(model_name="models/gemini-pro")
 
+@log_time
 def pipeline_03(mode:str,query:str)->str:
   """
   mode: create or query

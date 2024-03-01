@@ -19,7 +19,7 @@ nodes = transform.transform_using_RecursiveCharacterTextSplitter(
                 "chunk_overlap": 200,
                 "separators": ["\n\n", "\n", " ", ""]})
 embedding_model = embedding.embed_using_GeminiEmbedding(model_name="models/embedding-001")
-vector_index = index.get_vector_index_using_VectorStoreIndex(nodes=nodes,embedding_model=embedding_model)
+vector_index = index.get_index_using_VectorStoreIndex(nodes=nodes,embedding_model=embedding_model)
 
 vector_index.storage_context.persist("storage/db")
 

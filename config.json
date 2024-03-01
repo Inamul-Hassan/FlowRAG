@@ -1,0 +1,63 @@
+{
+  "txt":{
+    "loader": 
+      {"type":"SimpleDirectoryReader",
+        "library":"llama-index",
+        "imports":["from llama_index.core import SimpleDirectoryReader"],
+        "config":{
+          "input_dir":"storage/data",
+          "required_exts":[".txt"]
+        }
+      },
+    "transformer":[
+      {"type":"SentenceSplitter",
+        "library":"llama-index",
+        "imports":["from llama_index.core.node_parser import SentenceSplitter"],
+        "config":{
+          "separator": " ",
+          "chunk_size":  "1024",
+          "chunk_overlap":"20",
+          "paragraph_separator":"\n\n\n"
+        }
+      },
+      {"type":"SentenceWindowNodeParser",
+        "library":"llama-index",
+        "imports":["import nltk","from llama_index.core.node_parser import SentenceWindowNodeParser"],
+        "config":{
+          "window_size": 3
+        }
+      },
+      {"type":"RecursiveCharacterTextSplitter",
+        "library":"langchain",
+        "imports":["from langchain.text_splitter import RecursiveCharacterTextSplitter","from llama_index.core.node_parser import LangchainNodeParser"],
+        "config":{
+          "chunk_size":  "4000",
+          "chunk_overlap":"200",
+          "separators": ["\n\n", "\n", " ", ""]
+        }
+      },
+      {"type": "SemanticSplitterNodeParser",
+        "library": "llama-index",
+        "imports": ["from llama_index.core.node_parser import SemanticSplitterNodeParser", "from llama_index.core.base.embeddings.base import BaseEmbedding"],
+        "config": {
+          "buffer_size": "100",
+          "include_metadata": "True",
+          "include_prev_next_rel": "True"
+        }
+      }
+    ],
+    "indexing":{
+      "index":[
+        {"type":"VectorStoreIndex"
+        },
+        {"type":"SummaryIndex"
+        }
+      ],
+      "vector_store":[
+        {"type":"ChromaDB"
+        }
+      ]
+    }
+
+  }
+}

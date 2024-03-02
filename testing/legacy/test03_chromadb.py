@@ -1,6 +1,6 @@
 import sys
 # sys.path.append(r'C:\Users\vishal\Documents\AI\RAG pipeline\FlowRAG')
-sys.path.append("E:\Python\Directory\FlowRAG-main")
+sys.path.append("E:\Python\Directory\FlowRAG")
 
 from backend import load
 from backend import transform
@@ -12,7 +12,7 @@ from llama_index.core import Settings
 
 from dotenv import load_dotenv
 load_dotenv()
-from util import log_time
+from backend.flowrag.util import log_time
 
 # Load the models
 embedding_model = embedding.embed_using_GeminiEmbedding(model_name="models/embedding-001")
@@ -20,7 +20,7 @@ llm = Gemini(model_name="models/gemini-pro")
 Settings.llm = Gemini(model_name="models/gemini-pro")
 
 @log_time
-def pipeline_04(mode:str,query:str)->str:
+def pipeline_03(mode:str,query:str)->str:
   """
   mode: create or query
   query: the query to be searched
@@ -37,13 +37,13 @@ def pipeline_04(mode:str,query:str)->str:
                       "separators": ["\n\n", "\n", " ", ""]})
 
       # Database configuration
-      storage_context = index.save_to_qdrant(collection_name="PaulGramEassay01",isLocal=True,config=None)
+      storage_context = index.save_to_chromadb("PaulGramEassay01")
 
       # Index the documents
       vector_index = index.get_index_using_VectorStoreIndex(nodes=nodes,embedding_model=embedding_model,storage_context=storage_context)
     case "query":
       # Get indexed documents from local storage
-      vector_index = index.load_from_qdrant("PaulGramEassay01",isLocal=True,embedding_model=embedding_model)
+      vector_index = index.load_from_chromadb("PaulGramEassay01",embedding_model=embedding_model)
     case _:
       raise ("Invalid mode") 
 
@@ -57,4 +57,5 @@ def pipeline_04(mode:str,query:str)->str:
   return query_response
 
 if __name__ == "__main__":
-  pipeline_04("query",query="what is vieweb?")
+  # pipeline_03("create",query="what did the author accomplish by 2020?")
+  pipeline_03("query",query="what did the author accomplish by 2020?")

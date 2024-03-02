@@ -43,7 +43,10 @@ def validate_input_file(input_file: str) -> str:
 """
 
 
-def get_docs_using_SimpleDirectoryReader(input_dir: str) -> SimpleDirectoryReader:
+def load_using_SimpleDirectoryReader(input_dir: str) -> SimpleDirectoryReader:
+    """
+    Supported Extensions: ".hwp", ".pdf", ".docx", ".pptx", ".ppt", ".pptm", ".jpg",".png", ".jpeg", ".mp3", ".mp4", ".csv", ".epub", ".md", ".mbox", ".ipynb", ".txt", ".json"
+    """
     reader = SimpleDirectoryReader(
         input_dir=input_dir,
     )

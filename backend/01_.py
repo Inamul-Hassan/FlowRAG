@@ -1,7 +1,7 @@
-from flowrag.load import get_docs_using_SimpleDirectoryReader
+from flowrag.load import load_using_SimpleDirectoryReader
 
 
 
-docs = get_docs_using_SimpleDirectoryReader("storage/data")
+docs = load_using_SimpleDirectoryReader("storage/data")
 
 print(docs)

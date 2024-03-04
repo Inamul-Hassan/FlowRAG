@@ -1981,6 +1981,21 @@ llama-index-core = ">=0.10.7,<0.11.0"
 llama-parse = ">=0.3.3,<0.4.0"
 
 [[package]]
+name = "llama-index-retrievers-bm25"
+version = "0.1.3"
+description = "llama-index retrievers bm25 integration"
+optional = false
+python-versions = ">=3.8.1,<4.0"
+files = [
+    {file = "llama_index_retrievers_bm25-0.1.3-py3-none-any.whl", hash = "sha256:40bb8624000abfef7ee5d1689330b408181ca793d6bfe141cd3310adc1d23b1a"},
+    {file = "llama_index_retrievers_bm25-0.1.3.tar.gz", hash = "sha256:d996c731a74b9866ba47827430011ca7fa84f633d8f25c9bb8aaed3767937425"},
+]
+
+[package.dependencies]
+llama-index-core = ">=0.10.1,<0.11.0"
+rank-bm25 = ">=0.2.2,<0.3.0"
+
+[[package]]
 name = "llama-index-vector-stores-chroma"
 version = "0.1.5"
 description = "llama-index vector_stores chroma integration"
@@ -3734,6 +3749,23 @@ urllib3 = ">=1.26.14,<3"
 fastembed = ["fastembed (==0.1.1)"]
 
 [[package]]
+name = "rank-bm25"
+version = "0.2.2"
+description = "Various BM25 algorithms for document ranking"
+optional = false
+python-versions = "*"
+files = [
+    {file = "rank_bm25-0.2.2-py3-none-any.whl", hash = "sha256:7bd4a95571adadfc271746fa146a4bcfd89c0cf731e49c3d1ad863290adbe8ae"},
+    {file = "rank_bm25-0.2.2.tar.gz", hash = "sha256:096ccef76f8188563419aaf384a02f0ea459503fdf77901378d4fd9d87e5e51d"},
+]
+
+[package.dependencies]
+numpy = "*"
+
+[package.extras]
+dev = ["pytest"]
+
+[[package]]
 name = "referencing"
 version = "0.33.0"
 description = "JSON Referencing + Python"
@@ -5403,4 +5435,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "cde1793ea12a8d66be3f9d90c4367121a47064408e0326194475f4f9b64727fe"
+content-hash = "8d10dfb598c6e1756037b74489fa8ab8c53f9972b572179f9d3e3ffd456646b1"

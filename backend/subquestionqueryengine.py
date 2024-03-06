@@ -10,6 +10,7 @@ Progress:
 TODO:
     - Indexing issue - resolve
     - Try out different retrievers
+    - implement memory buffer
 """
 from llama_index.llms.gemini import Gemini
 from llama_index.embeddings.gemini import GeminiEmbedding
@@ -59,10 +60,7 @@ session = px.launch_app()
 # Settings.callback_manager = callback_manager
 
 # model configuration
-llm = Gemini(model_name="models/gemini-pro",)
-embed_model = GeminiEmbedding(model_name = "models/embedding-001")
-Settings.embed_model = embed_model
-Settings.llm = llm
+
 
 class SubQuestionQuerying:
     """
@@ -72,16 +70,18 @@ class SubQuestionQuerying:
                        seperators = ["\n\n", "\n", " ", ""] }
     
     """
-    def __init__(self,input_dir:str,rcts_config:dict):
+    def __init__(self,input_dir:str,rcts_config:dict,embed_model, llm) -> None:
         """
         input_dir: str - input directory containing the source documents
-        rcts_config = {chunk_size=1000,
+        rcts_config = {chunk_size=1250,
                        chunk_overlap=0,
                        seperators = ["\n\n", "\n", " ", ""] }
         """
         
         self.documents = SimpleDirectoryReader(input_dir=input_dir).load_data()
-        self.rcts_config = rcts_config        
+        self.rcts_config = rcts_config
+        Settings.embed_model = embed_model
+        Settings.llm = llm        
         
     # def store_to_chroma(self,collection_name:str)->BasePydanticVectorStore:
     #     """
@@ -179,9 +179,12 @@ class SubQuestionQuerying:
         
         
 if __name__ == "__main__":
+    llm = Gemini(model_name="models/gemini-pro",)
+    embed_model = GeminiEmbedding(model_name = "models/embedding-001")
+
     sqqe = SubQuestionQuerying(input_dir="storage/data", rcts_config={
         "chunk_size": 1000,
         "chunk_overlap": 0
-    })
+    },llm=llm,embed_model=embed_model)
     
     sqqe.query(mode="query",query="what made the author interested in the AI?")

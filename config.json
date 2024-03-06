@@ -1,0 +1,10 @@
+{
+  "subquestionquerying" : {
+    "LLM": {"name":"gemini-pro","api_key":"xxxxxxxxxxxx"},
+    "EMBEDDING_MODEL":{"name":"embedding-001","api_key":"xxxxxxxxxxxx"},
+    "RecursiveCharacterTestSpilitter" : {"chunk_size":1250,
+    "chunk_overlap":0,
+    "seperators":["\n\n", "\n", " ", ""]},
+    "VectorStore":{"name":"ChromaDB"}
+  }
+}

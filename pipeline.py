@@ -3,7 +3,7 @@ import streamlit_antd_components as sac
 
 # load json from local file and convert it into a dictionary
 import json
-with open('E:\Python\Directory\FlowRAG-main\storage\config.json') as f:
+with open('E:\Python\Directory\FlowRAG\config.json') as f:
     configuration = json.load(f)
 
 st.markdown("# Pipeline")

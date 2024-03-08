@@ -19,6 +19,11 @@ from llama_index.core import StorageContext
 
 from llama_index.core import VectorStoreIndex
 
+from llama_index.core import PromptTemplate
+from llama_index.core.llms import ChatMessage, MessageRole
+from llama_index.core.chat_engine import CondenseQuestionChatEngine
+from llama_index.core.storage.chat_store import SimpleChatStore
+
 import phoenix as px
 import llama_index.core
 llama_index.core.set_global_handler("arize_phoenix")
@@ -39,6 +44,10 @@ class ReciprocalRerankFusionRetriever:
             "storage": {
                 "db_loc": "storage/chromadb",
                 "collection_name": "defaultDB"
+            },
+            "chat_history": {
+                "loc": "storage/chat_store.json",
+                "key": "user01"
             }
         }
         '''
@@ -68,9 +77,19 @@ class ReciprocalRerankFusionRetriever:
             storage_context = storage_context
         )
 
-    def query(self, query_str: str, debug: bool) -> str:
+        # Store chat history
+        chat_store = SimpleChatStore()
+        chat_store.add_message(self.config["chat_history"]["key"], message= ChatMessage(
+                    role=MessageRole.USER,
+                    content="Hello assistant, we are having a insightful discussion about Paul Graham today."))
+        chat_store.add_message(self.config["chat_history"]["key"], message= ChatMessage(
+                    role=MessageRole.ASSISTANT, 
+                    content="Okay, sounds good."))
+        chat_store.persist(persist_path=self.config["chat_history"]["loc"])   
 
-        def load(db_loc: str, collection_name: str) -> BaseIndex:
+    def query(self, query_str: str, debug: bool = False) -> str:
+
+        def load(db_loc: str, collection_name: str, chat_history_loc: str):
             db = chromadb.PersistentClient(path = db_loc)
             chroma_collection = db.get_or_create_collection(name = collection_name)
             vector_store = ChromaVectorStore(chroma_collection = chroma_collection)
@@ -78,10 +97,17 @@ class ReciprocalRerankFusionRetriever:
                 vector_store = vector_store,
                 embed_model = self.embed_model
             )
-            return index
 
-        # Load index from storage
-        index = load(db_loc = self.config["storage"]["db_loc"], collection_name = self.config["storage"]["collection_name"])
+            chat_store = SimpleChatStore.from_persist_path(chat_history_loc)
+            
+            return index, chat_store
+
+        # Load index from storage and chat history
+        index, chat_store = load(
+            db_loc = self.config["storage"]["db_loc"], 
+            collection_name = self.config["storage"]["collection_name"], 
+            chat_history_loc = self.config["chat_history"]["loc"]
+        )
 
         # Retrievers
         base_retriever = index.as_retriever(similarity_top_k = self.config["retriever"]["similarity_top_k"])
@@ -95,13 +121,32 @@ class ReciprocalRerankFusionRetriever:
 
         # Query engine
         query_engine = RetrieverQueryEngine.from_args(retriever)
+
+        # Setting system prompt to consider chat hostory
+        custom_prompt = PromptTemplate("""Given a conversation (between Human and Assistant) and a follow up message from Human, rewrite the message to be a standalone question that captures all relevant context from the conversation and that standalone question can be used to query a vector database to get the relavent data.\n<Chat History>\n{chat_history}\n<Follow Up Message>\n{question}\n<Standalone question>""")
+        # Pull chat history for the provided key
+        custom_chat_history = chat_store.get_messages(self.config["chat_history"]["key"]) 
+
+        # Initialize chat engine
+        chat_engine = CondenseQuestionChatEngine.from_defaults(
+            query_engine = query_engine,
+            condense_question_prompt = custom_prompt,
+            chat_history = custom_chat_history,
+            verbose = True,
+            llm = self.llm
+        )
         
+        response = chat_engine.chat(query_str).response
+
+        # Appending current chat query and its response
+        chat_store.add_message(self.config["chat_history"]["key"], ChatMessage(role=MessageRole.USER, content = query_str))
+        chat_store.add_message(self.config["chat_history"]["key"], ChatMessage(role=MessageRole.ASSISTANT, content = response))
+        chat_store.persist(persist_path="storage/chat_store.json")
+
         if debug:
             import time
             while True:
                 time.sleep(100)
-
-        response =  query_engine.query(query_str)
 
         return response
 
@@ -128,11 +173,16 @@ if __name__ == "__main__":
             "storage": {
                 "db_loc": "storage/chromadb",
                 "collection_name": "defaultDB"
+            },
+            "chat_history": {
+                "loc": "storage/chat_store.json",
+                "key": "user01"
             }
         },
         llm = llm,
         embed_model = embed_model
     )
-    # rag.store()
+    rag.store()
 
-    print(rag.query("When did he visit Rich Draves?", debug = True))
+    print(rag.query("Does he applied to two art schools?", debug = False))
+    print(rag.query("What are those?", debug = True))

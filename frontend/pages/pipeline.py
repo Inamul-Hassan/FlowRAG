@@ -6,6 +6,11 @@ import json
 with open('E:\Python\Directory\FlowRAG\config.json') as f:
     configuration = json.load(f)
 
+if "selected_pipeline" and "selected_data" and "selected_config" not in st.session_state:
+  st.switch_page("app.py")
+  
+st.info(f"Pipeline : {st.session_state.selected_pipeline}")
+
 st.markdown("# Pipeline")
 
 
@@ -41,7 +46,8 @@ st.session_state.tab_selected = tab_selected
 
 match st.session_state.tab_selected:
     case "Transformation":
-        tranformation()
+        # tranformation()
+        st.write("Not implemented yet")
     case _:
         st.write("Not implemented yet")
 

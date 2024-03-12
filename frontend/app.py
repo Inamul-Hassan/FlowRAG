@@ -3,7 +3,6 @@ import streamlit_antd_components as sac
 from streamlit_extras.card import card
 from streamlit_extras.metric_cards import style_metric_cards  
 from streamlit_card import card as cd
-from pages import config
 import streamlit_shadcn_ui as ui
 
 
@@ -23,6 +22,8 @@ st.info("This is a developer centric tool. It is meant to be used by developers/
 
 st.markdown("## Select a pipeline")
 
+st.markdown("### For Unstrucutured Data")
+
 with st.expander(label="SubQuestionQueryEngine",expanded=False):
     st.write("Sub Question Querying can break down a complex question into to smaller sub question and retreieve relavent data from the provided sources/files(Even multiple files/sources).")
     st.markdown("#### The main components of the pipeline are,")
@@ -35,7 +36,8 @@ with st.expander(label="SubQuestionQueryEngine",expanded=False):
         sac.TabsItem(label='Sub question query engine'),
     ], return_index=True,key="sqqe_tab")
 
-    st.button("Select",key="sqqe_submit_bt")
+    st.button("Get Started",key="sqqe_submit_bt",on_click=onClick, args=("SubQuestionQueryEngine",),type="primary")
+    
 with st.expander(label="ReciprocalRerankFusionRetriever",expanded=False):
     st.write("@vishal")
     st.markdown("#### The main components of the pipeline are,")
@@ -48,43 +50,11 @@ with st.expander(label="ReciprocalRerankFusionRetriever",expanded=False):
         sac.TabsItem(label='Sub question query engine'),
     ], return_index=True,key="rrfr_tab")
 
-    st.button("Select",key="rrfr_submit_bt")
+    st.button("Get Started",key="rrfr_submit_bt",on_click=onClick, args=("ReciprocalRerankFusionRetriever",),type="primary")
+# st.markdown("### For Structured Data")
     
-    
-
-# with ui.card(key="card1"):
-#     ui.element("span", children~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# =["Email"], className="text-black text-xl font-bold m-1", key="label1")
-#     ui.element("input", key="email_input", placeholder="Your email")
-
-#     ui.element("span", children=["User Name"], className="text-gray-400 text-sm font-medium m-1", key="label2")
-#     ui.element("input", key="username_input", placeholder="Create a User Name")
-#     ui.element("button", text="Submit", key="button", className="m-1")
-    
-# event=card(
-#         title="Hello World!",
-#         text="Some description",
-#         key="card_sac_1",
-        
-#         # image="http://placekitten.com/300/250",
-#         # url="https://www.google.com",
-#     )
-# cols = st.columns(3)
-# with cols[0]:
-#     card1 = ui.metric_card(title="Total Revenue", content="$45,231.89", description="+20.1% from last month", key="card1")
-# with cols[1]:
-#     card2 = ui.metric_card(title="Total Revenue", content="$45,231.89", description="+20.1% from last month", key="card2")
-# with cols[2]:
-#     card3 = ui.metric_card(title="Total Revenue", content="$45,231.89", description="+20.1% from last month", key="card3")
-
-# col1, col2, col3 = st.columns(3)
-
-# col1.metric(label="Gain", value=5000, delta=1000)
-# col2.metric(label="Loss", value=5000, delta=-1000)
-# col3.metric(label="No Change", value=5000, delta=0)
-
-# style_metric_cards(background_color="#FFF")
-
+if "selected_pipeline" in st.session_state:
+    st.switch_page("pages/data.py")
 
 # Debug
 with st.expander("Debug"):

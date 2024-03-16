@@ -1,10 +1,60 @@
 {
   "subquestionquerying" : {
-    "LLM": {"name":"gemini-pro","api_key":"xxxxxxxxxxxx"},
-    "EMBEDDING_MODEL":{"name":"embedding-001","api_key":"xxxxxxxxxxxx"},
-    "RecursiveCharacterTestSpilitter" : {"chunk_size":1250,
-    "chunk_overlap":0,
-    "seperators":["\n\n", "\n", " ", ""]},
-    "VectorStore":{"name":"ChromaDB"}
+    "core": {
+      "llm": {
+        "name": "gemini-pro",
+        "api_key": "xxxxxxxxxxxx"
+      },
+      "embedding": {
+        "name": "embedding-001",
+        "api_key": "xxxxxxxxxxxx"
+      }
+    },
+    "transform": {
+        "chunk_size": 512,
+        "chuck_overlap": 0,
+        "seperators": ["\n\n", "\n", " ", ""]
+    },
+    "retriever": {
+        "similarity_top_k": 5,
+        "num_queries": 4
+    },
+    "storage": {
+        "db_loc": "storage/chromadb",
+        "collection_name": "defaultDB"
+    },
+    "chat_history": {
+        "loc": "storage/chat_store.json",
+        "key": "user01"
+    }
+  },
+  "reciprocalrerankfusionretriever": {
+    "core": {
+      "llm": {
+        "name": "gemini-pro",
+        "api_key": "xxxxxxxxxxxx"
+      },
+      "embedding": {
+        "name": "embedding-001",
+        "api_key": "xxxxxxxxxxxx"
+      }
+    },
+    "transform": {
+        "chunk_size": 512,
+        "chuck_overlap": 0,
+        "seperators": ["\n\n", "\n", " ", ""]
+    },
+    "retriever": {
+        "similarity_top_k": 5,
+        "num_queries": 4
+    },
+    "storage": {
+        "db_loc": "storage/chromadb",
+        "collection_name": "defaultDB"
+    },
+    "chat_history": {
+        "loc": "storage/chat_store.json",
+        "key": "user01"
+    }
   }
 }

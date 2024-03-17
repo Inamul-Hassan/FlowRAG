@@ -1,5 +1,5 @@
 {
-  "subquestionquerying" : {
+  "SubQuestionQuerying" : {
     "core": {
       "llm": {
         "name": "gemini-pro",
@@ -28,7 +28,7 @@
         "key": "user01"
     }
   },
-  "reciprocalrerankfusionretriever": {
+  "ReciprocalRerankFusionRetriever": {
     "core": {
       "llm": {
         "name": "gemini-pro",

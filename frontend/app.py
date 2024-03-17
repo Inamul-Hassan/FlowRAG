@@ -24,7 +24,7 @@ st.markdown("## Select a pipeline")
 
 st.markdown("### For Unstrucutured Data")
 
-with st.expander(label="SubQuestionQueryEngine",expanded=False):
+with st.expander(label="SubQuestionQuerying",expanded=False):
     st.write("Sub Question Querying can break down a complex question into to smaller sub question and retreieve relavent data from the provided sources/files(Even multiple files/sources).")
     st.markdown("#### The main components of the pipeline are,")
     tab_returend_index = sac.tabs([
@@ -36,7 +36,7 @@ with st.expander(label="SubQuestionQueryEngine",expanded=False):
         sac.TabsItem(label='Sub question query engine'),
     ], return_index=True,key="sqqe_tab")
 
-    st.button("Get Started",key="sqqe_submit_bt",on_click=onClick, args=("SubQuestionQueryEngine",),type="primary")
+    st.button("Get Started",key="sqqe_submit_bt",on_click=onClick, args=("SubQuestionQuerying",),type="primary")
     
 with st.expander(label="ReciprocalRerankFusionRetriever",expanded=False):
     st.write("@vishal")

@@ -39,8 +39,5 @@ if "selected_config" in st.session_state:
   else:
     st.switch_page("pages/pipeline.py")
 
-
-
-  
 with st.expander("Debug"):
   st.write(st.session_state)

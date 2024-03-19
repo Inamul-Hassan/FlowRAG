@@ -21,10 +21,10 @@ from llama_index.core.base.embeddings.base import BaseEmbedding
 
 import utils
 
-import phoenix as px
-import llama_index.core
-llama_index.core.set_global_handler("arize_phoenix")
-session = px.launch_app()
+# import phoenix as px
+# import llama_index.core
+# llama_index.core.set_global_handler("arize_phoenix")
+# session = px.launch_app()
 
 class SubQuestionQuerying:
 
@@ -91,10 +91,10 @@ class SubQuestionQuerying:
             response = response
         )
 
-        if debug:
-            import time
-            while True:
-                time.sleep(100)
+        # if debug:
+        #     import time
+        #     while True:
+        #         time.sleep(100)
 
         return response
 

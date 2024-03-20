@@ -71,3 +71,28 @@ def get_chat_engine(query_engine, llm, chat_store, config):
     )
 
     return chat_engine
+
+import os
+import zipfile
+
+from fastapi import FastAPI
+from fastapi.responses import FileResponse
+
+app = FastAPI()
+
+@app.get("/download/{file_paths}")
+async def zip_and_download(file_paths: str):
+    preset = ""
+    files_and_folders = f"{preset},{file_paths}".split(",")
+    zip_file_path = r"tmp\download.zip"
+    with zipfile.ZipFile(zip_file_path, "w") as zipf:
+        for file_or_folder in files_and_folders:
+            if os.path.isfile(file_or_folder):
+                zipf.write(file_or_folder, os.path.basename(file_or_folder))
+            elif os.path.isdir(file_or_folder):
+                for root, _, files in os.walk(file_or_folder):
+                    for file in files:
+                        file_path = os.path.join(root, file)
+                        zipf.write(file_path, os.path.relpath(file_path, file_or_folder))
+
+    return FileResponse(zip_file_path, media_type="application/zip", filename="FlowRAG.zip")

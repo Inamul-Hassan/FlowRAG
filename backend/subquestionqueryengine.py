@@ -1,21 +1,11 @@
 from llama_index.llms.gemini import Gemini
 from llama_index.embeddings.gemini import GeminiEmbedding
 
-import chromadb
-from llama_index.core import SimpleDirectoryReader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from llama_index.core.node_parser import LangchainNodeParser
-from llama_index.vector_stores.chroma import ChromaVectorStore
-from llama_index.core import StorageContext
 from llama_index.core.indices.vector_store.retrievers import VectorIndexRetriever
 from llama_index.core.query_engine.retriever_query_engine import RetrieverQueryEngine
 from llama_index.core.tools import QueryEngineTool, ToolMetadata
 from llama_index.core.query_engine import SubQuestionQueryEngine
-from llama_index.core import PromptTemplate
-from llama_index.core.llms import ChatMessage, MessageRole
-from llama_index.core.chat_engine import CondenseQuestionChatEngine
-from llama_index.core.storage.chat_store import SimpleChatStore
-from llama_index.core import VectorStoreIndex, Settings
+from llama_index.core import Settings
 from llama_index.core.llms.llm import LLM
 from llama_index.core.base.embeddings.base import BaseEmbedding
 

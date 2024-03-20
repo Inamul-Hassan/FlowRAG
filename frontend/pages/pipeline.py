@@ -9,6 +9,7 @@ if 'finish_bt' in st.session_state:
   
 
 import json
+# with open(r'C:\Users\vishal\Documents\AI\RAG pipeline\FlowRAG\config.json') as f:
 with open('E:\Python\Directory\FlowRAG\config.json') as f:
     configuration = json.load(f)
 
@@ -35,7 +36,13 @@ def onClickForm(pipeline_step,configuration,isLast:bool):
 def display_config_form(pipeline_step:str,isLast:bool): 
     st.session_state.configuration = {}
     for key,value in pipeline_config[pipeline_step].items():
-        st.session_state.configuration[key] = st.text_input(label=key, value=value)
+        try:
+            val = int(value)
+            st.session_state.configuration[key] = st.number_input(label = key, value = val)
+        except:
+            val = value
+            st.session_state.configuration[key] = st.text_input(label = key, value = val)
+
     
     if isLast:
         st.button(label="Finish",on_click=onClickForm,args=(pipeline_step,st.session_state.configuration,True))

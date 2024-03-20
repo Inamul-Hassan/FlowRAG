@@ -37,7 +37,7 @@ if st.session_state["FormSubmitter:is_data_source_selected-Next"]:
     if not st.session_state.selected_data:
         st.error("Please select at least one data format/source")   
     else:
-        st.switch_page("pages/config.py")
+        st.switch_page("pages/pipeline.py")
         pass
     # st.write(selected)
     # st.write(st.session_state)

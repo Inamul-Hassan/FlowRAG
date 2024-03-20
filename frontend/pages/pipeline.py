@@ -1,7 +1,7 @@
 import streamlit as st
 import streamlit_antd_components as sac
 
-if "selected_pipeline" and "selected_data" and "selected_config" not in st.session_state:
+if "selected_pipeline" and "selected_data" not in st.session_state:
   st.switch_page("app.py")
   
 if 'finish_bt' in st.session_state:

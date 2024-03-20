@@ -12,8 +12,8 @@
     },
     "transform": {
         "chunk_size": 512,
-        "chuck_overlap": 0,
-        "seperators": ["\n\n", "\n", " ", ""]
+        "chunk_overlap": 0,
+        "separator": " "
     },
     "retriever": {
         "similarity_top_k": 5,
@@ -41,8 +41,8 @@
     },
     "transform": {
         "chunk_size": 512,
-        "chuck_overlap": 0,
-        "seperators": ["\n\n", "\n", " ", ""]
+        "chunk_overlap": 0,
+        "separator": " "
     },
     "retriever": {
         "similarity_top_k": 5,

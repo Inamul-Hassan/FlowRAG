@@ -9,10 +9,10 @@ from llama_index.embeddings.gemini import GeminiEmbedding
 
 import utils
 
-import phoenix as px
-import llama_index.core
-llama_index.core.set_global_handler("arize_phoenix")
-session = px.launch_app()
+# import phoenix as px
+# import llama_index.core
+# llama_index.core.set_global_handler("arize_phoenix")
+# session = px.launch_app()
 
 class ReciprocalRerankFusionRetriever:
 
@@ -69,10 +69,10 @@ class ReciprocalRerankFusionRetriever:
             response = response
         )
 
-        if debug:
-            import time
-            while True:
-                time.sleep(100)
+        # if debug:
+        #     import time
+        #     while True:
+        #         time.sleep(100)
 
         return response
 

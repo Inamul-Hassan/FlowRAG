@@ -7,44 +7,78 @@ from llama_index.core.llms import ChatMessage, MessageRole
 from pathlib import Path
 
 from subquestionqueryengine import SubQuestionQuerying
+from reciprocalrerankfusionretriever import ReciprocalRerankFusionRetriever
 from llama_index.llms.gemini import Gemini
 from llama_index.embeddings.gemini import GeminiEmbedding
 from llama_index.core import Settings
+import json
 from dotenv import load_dotenv
 load_dotenv()
+
+print("Imported all modules...")
+
 
 llm = Gemini(model_name="models/gemini-pro")
 embed_model = GeminiEmbedding(model_name = "models/embedding-001")
 Settings.embed_model = embed_model
 Settings.llm = llm
 
+print("Loaded Llms...")
+# llm = "llm"
+# embed_model = "embed_model"
+
+def load_json(file_path):
+  with open(file_path) as f:
+    data = json.load(f)
+  return data
+
+user_config = load_json('user_config.json')
+pipeline = user_config["pipline"]
+
+
+print("Loading RAG...")
+
 if "rag" not in st.session_state: 
-    rag = SubQuestionQuerying(
-            data_dir = "storage/data",
-            config = {
-                "transform": {
-                    "chunk_size": 512
-                },
-                "retriever": {
-                    "similarity_top_k": 5,
-                    "num_queries": 4
-                },
-                "storage": {
-                    "db_loc": "storage/chromadb",
-                    "collection_name": "defaultDB"
-                },
-                "chat_history": {
-                    "loc": "storage/chat_store.json",
-                    "key": "user01"
-                }
-            },
-            llm = llm,
-            embed_model = embed_model
-        )
+    match pipeline:
+        case "SubQuestionQuerying":
+            rag = SubQuestionQuerying(data_dir="storage/data",
+                                      config=user_config["config"],
+                                      llm=llm,
+                                      embed_model=embed_model)
+        case "ReciprocalRerankFusionRetriever":
+            rag = ReciprocalRerankFusionRetriever(data_dir="storage/data",
+                                                  config=user_config["config"],
+                                                  llm=llm,
+                                                  embed_model=embed_model)
+        case _:
+            raise ValueError("Invalid pipeline selected")
+    # rag = SubQuestionQuerying(
+    #         data_dir = "storage/data",
+    #         config = {
+    #             "transform": {
+    #                 "chunk_size": 512
+    #             },
+    #             "retriever": {
+    #                 "similarity_top_k": 5,
+    #                 "num_queries": 4
+    #             },
+    #             "storage": {
+    #                 "db_loc": "storage/chromadb",
+    #                 "collection_name": "defaultDB"
+    #             },
+    #             "chat_history": {
+    #                 "loc": "storage/chat_store.json",
+    #                 "key": "user01"
+    #             }
+    #         },
+    #         llm = llm,
+    #         embed_model = embed_model
+    #     )
     rag.store()
     st.session_state.rag = rag
-
+    
 print("Started!")
+
 
 def onClick():
   st.session_state.submitted = True

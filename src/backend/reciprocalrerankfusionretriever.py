@@ -7,7 +7,7 @@ from llama_index.retrievers.bm25 import BM25Retriever
 from llama_index.llms.gemini import Gemini
 from llama_index.embeddings.gemini import GeminiEmbedding
 
-import utils
+import backend.utils as utils
 
 # import phoenix as px
 # import llama_index.core

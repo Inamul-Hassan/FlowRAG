@@ -9,7 +9,7 @@ from llama_index.core import Settings
 from llama_index.core.llms.llm import LLM
 from llama_index.core.base.embeddings.base import BaseEmbedding
 
-import utils
+import backend.utils as utils
 
 # import phoenix as px
 # import llama_index.core

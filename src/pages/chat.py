@@ -5,10 +5,19 @@
 import streamlit as st
 import json
 from pathlib import Path
-import st_pages as stp
 
 st.set_page_config(page_title="FlowRAG", page_icon="💬", layout="wide")
-st.title("FlowRAG - Quick and Easy Custom Advance RAG Pipeline For Your Data")
+st.title("FlowRAG")
+st.subheader("An Advance RAG Pipeline For Your Data")
+
+# hide side bar
+st.markdown("""
+      <style>
+          section[data-testid="stSidebar"][aria-expanded="true"]{
+              display: none;
+          }
+      </style>
+      """, unsafe_allow_html=True)
 
 def load_json(file_path):
       with open(file_path) as f:
@@ -21,20 +30,20 @@ pipeline = user_config["pipline"]
 def onClick():
       st.session_state.submitted = True
 
-with st.sidebar:
-    st.write("# Configuration")
+
+if "submitted" not in st.session_state:
+    # get api key and data
+    st.warning("Please provide your API key and data to get started.")
     llm_mapping = {
       "Gemini":["gemini-pro-1.0"],
       "OpenAI":["gpt3.5-turbo","gpt-4"]
     }
     embedding_models = ["embedding-001","embedding-002","embedding-003"]
 
-    st.write("## LLM")
-
-    llm_provider = st.selectbox(label="Select a llm provider",options=llm_mapping.keys(),index=0)
-    options = llm_mapping[llm_provider]
-    llm_model = st.selectbox(label="Select a llm model",options=options,index=0)
-    llm_api_key = st.text_input(label="API Key",type="password")
+    st.session_state.llm_provider = st.selectbox(label="Select a llm provider",options=llm_mapping.keys(),index=0)
+    options = llm_mapping[st.session_state.llm_provider]
+    st.session_state.llm_model = st.selectbox(label="Select a llm model",options=options,index=0)
+    st.session_state.llm_api_key = st.text_input(label="API Key",type="password")
     
     if "file_uploaded" not in st.session_state:
       st.session_state.file_uploaded = False
@@ -48,31 +57,16 @@ with st.sidebar:
             w.write(file.getvalue())
         st.session_state.file_uploaded = True
       
-    if llm_api_key is None or llm_api_key == "" or st.session_state.file_uploaded == False:
+    if st.session_state.llm_api_key is None or st.session_state.llm_api_key == "" or st.session_state.file_uploaded == False:
       st.button(label="Get Started",disabled=True)
     else:
       st.button(label="Get Started",on_click=onClick)
       
     st.write(st.session_state)
-    
-    
 
-
-# from dotenv import load_dotenv
-# load_dotenv()
-    
-
-if "submitted" not in st.session_state:
-    st.warning("Please provide your API key to get started.")
 else:
-    st.markdown("""
-      <style>
-          section[data-testid="stSidebar"][aria-expanded="true"]{
-              display: none;
-          }
-      </style>
-      """, unsafe_allow_html=True)
     with st.spinner("Hang On, We are setting up the environment..."):
+      # initialize the RAG pipeline
       from llama_index.core.llms import ChatMessage, MessageRole
       
       from backend.subquestionqueryengine import SubQuestionQuerying
@@ -81,8 +75,8 @@ else:
       from llama_index.embeddings.gemini import GeminiEmbedding
       from llama_index.core import Settings
       
-      llm = Gemini(model_name="models/gemini-pro",api_key=llm_api_key)
-      embed_model = GeminiEmbedding(model_name = "models/embedding-001",api_key=llm_api_key)
+      llm = Gemini(model_name="models/gemini-pro",api_key=st.session_state.llm_api_key)
+      embed_model = GeminiEmbedding(model_name = "models/embedding-001",api_key=st.session_state.llm_api_key)
       Settings.embed_model = embed_model
       Settings.llm = llm
       

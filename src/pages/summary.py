@@ -26,3 +26,8 @@ save_config()
 # st.write(load_json('user_config.json'))
 
 st.write(config)
+
+create_button = st.button("Create Pipeline")
+
+if create_button:
+  st.switch_page("pages/chat.py")

@@ -26,6 +26,7 @@ arize-phoenix = "^3.5.0"
 llama-index-callbacks-arize-phoenix = "^0.1.4"
 streamlit-extras = "^0.4.0"
 streamlit-shadcn-ui = "^0.1.18"
+st-pages = "^0.4.5"
 
 
 [build-system]

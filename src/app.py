@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit_antd_components as sac
 
 st.title("FlowRAG")
 st.caption("A plug and play tool to quickly setup your own advanced RAG pipeline.")
@@ -10,8 +9,6 @@ st.markdown("- Get an end-to-end implementation code of an advanced RAG pipeline
 def onClick(event):
     st.session_state.selected_pipeline = event
 
-# st.markdown("## RAG Pipeline")
-# st.write("The main components of a RAG pipeline are,")
 
 st.info("This is a developer centric tool. It is meant to be used by developers/enthusiasts to quickly setup a complex RAG pipeline for their data and run test/eval over them.")
 

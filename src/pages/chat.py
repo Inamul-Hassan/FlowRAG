@@ -1,14 +1,10 @@
-# import sys
-# # sys.path.append(r'C:\Users\vishal\Documents\AI\RAG pipeline\FlowRAG')
-# sys.path.append("E:\Python\Directory\FlowRAG")
-
 import streamlit as st
 import json
 from pathlib import Path
 
-st.set_page_config(page_title="FlowRAG", page_icon="💬", layout="wide")
+st.set_page_config(page_title="FlowRAG", page_icon="💬")
 st.title("FlowRAG")
-st.subheader("An Advance RAG Pipeline For Your Data")
+st.write("An Advance RAG Pipeline For Your Data")
 
 # hide side bar
 st.markdown("""
@@ -67,13 +63,12 @@ if "submitted" not in st.session_state:
 else:
     with st.spinner("Hang On, We are setting up the environment..."):
       # initialize the RAG pipeline
-      from llama_index.core.llms import ChatMessage, MessageRole
-      
       from backend.subquestionqueryengine import SubQuestionQuerying
       from backend.reciprocalrerankfusionretriever import ReciprocalRerankFusionRetriever
+      
+      from llama_index.core.llms import ChatMessage, MessageRole
       from llama_index.llms.gemini import Gemini
       from llama_index.embeddings.gemini import GeminiEmbedding
-      from llama_index.core import Settings
       
       # its hard-coded now change in future
       llm = Gemini(model_name="models/gemini-pro",api_key=st.session_state.llm_api_key)
@@ -122,22 +117,8 @@ else:
         with st.chat_message(name="Human"):
             st.write(user_query)
         with st.spinner("Thinking..."):
-            response = st.session_state.rag.query(user_query, debug = False)
+            response = st.session_state.rag.query(user_query)
         with st.chat_message(name="AI"):
             st.write(response)
         
         st.session_state.chat_history.append(ChatMessage(role=MessageRole.ASSISTANT,content=response))
-        # st.write(st.session_state.chat_history)
-
-    # debug
-    with st.expander(label="Debug"):
-        st.write(st.session_state.chat_history)
-
-        st.write(user_query)
-
-    # with st.chat_message(name="AI"):
-    #     st.write(
-    #         "Hello! I'm DeepChat. Paste a website URL in the sidebar to get started.")
-
-    # with st.chat_message(name="Human"):
-    #     st.write("Hi! I'm excited to chat with you.")

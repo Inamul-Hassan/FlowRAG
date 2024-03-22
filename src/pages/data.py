@@ -1,16 +1,28 @@
 import streamlit as st
 import streamlit_antd_components as sac
 
+st.set_page_config(page_title="FlowRAG", page_icon="💬")
+
+st.markdown("""
+      <style>
+          section[data-testid="stSidebar"][aria-expanded="true"]{
+              display: none;
+          }
+      </style>
+      """, unsafe_allow_html=True)
+
+
 if "selected_pipeline" not in st.session_state:
     st.switch_page("app.py")
 
 st.info(f"Pipeline : {st.session_state.selected_pipeline}")
 
 st.markdown("## Data")
-
 st.write("- The first step in the creating your own RAG pipeline is to define all the data formats/sources that your pipeline should support.")
 st.write("- FlowRAG supports multiple files/sources but you have configure the pipeline to handle all the selected format/source.")
+
 st.divider()
+
 st.markdown("## Data Source")
 st.warning("⚠️ You don't be able to modify the data formats/sources later")
 with st.form(key="is_data_source_selected"):
@@ -38,6 +50,3 @@ if st.session_state["FormSubmitter:is_data_source_selected-Next"]:
         st.error("Please select at least one data format/source")   
     else:
         st.switch_page("pages/pipeline.py")
-        pass
-    # st.write(selected)
-    # st.write(st.session_state)

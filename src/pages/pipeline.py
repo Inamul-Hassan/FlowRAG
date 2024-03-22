@@ -1,6 +1,17 @@
 import streamlit as st
 import streamlit_antd_components as sac
 
+st.set_page_config(page_title="FlowRAG", page_icon="💬")
+
+st.markdown("""
+      <style>
+          section[data-testid="stSidebar"][aria-expanded="true"]{
+              display: none;
+          }
+      </style>
+      """, unsafe_allow_html=True)
+
+
 if "selected_pipeline" and "selected_data" not in st.session_state:
   st.switch_page("app.py")
   
@@ -9,11 +20,11 @@ if 'finish_bt' in st.session_state:
   
 
 import json
-# with open(r'C:\Users\vishal\Documents\AI\RAG pipeline\FlowRAG\config.json') as f:
 with open('src/pages/config.json') as f:
     configuration = json.load(f)
 
 pipeline = st.session_state.selected_pipeline
+
 try:
     pipeline_config = configuration[pipeline]
 except Exception as e:
@@ -82,7 +93,3 @@ match st.session_state.tab_selected:
     case _:
         st.write("Not implemented yet")
 
-
-# Debug
-with st.expander("Debug"):
-    st.write(st.session_state)

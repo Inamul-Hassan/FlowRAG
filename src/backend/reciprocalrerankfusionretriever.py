@@ -16,6 +16,8 @@ class ReciprocalRerankFusionRetriever:
         self.config = config
         self.llm = llm
         self.embed_model = embed_model
+        Settings.llm = self.llm
+        Settings.embed_model = self.embed_model
 
     def store(self) -> None:
         utils.store(
@@ -65,6 +67,8 @@ class ReciprocalRerankFusionRetriever:
 
         return response
 
+
+# For Testing
 if __name__ == "__main__":
     from dotenv import load_dotenv
     load_dotenv()

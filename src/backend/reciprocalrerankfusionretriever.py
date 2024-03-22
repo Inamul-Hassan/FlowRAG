@@ -16,9 +16,10 @@ import backend.utils as utils
 
 class ReciprocalRerankFusionRetriever:
 
-    def __init__(self, data_dir: str, config: dict, llm: LLM, embed_model: BaseEmbedding):
+    def __init__(self, data_dir: str, config: dict, llm: LLM, embed_model: BaseEmbedding,data_description: str):
                 
         self.nodes = utils.preprocess(data_dir = data_dir, config = config)
+        self.data_description = data_description
         self.config = config
         self.llm = llm
         self.embed_model = embed_model

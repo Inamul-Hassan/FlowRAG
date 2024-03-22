@@ -35,10 +35,9 @@ if "submitted" not in st.session_state:
     # get api key and data
     st.warning("Please provide your API key and data to get started.")
     llm_mapping = {
-      "Gemini":["gemini-pro-1.0"],
-      "OpenAI":["gpt3.5-turbo","gpt-4"]
+      "Gemini":["models/gemini-pro"],
     }
-    embedding_models = ["embedding-001","embedding-002","embedding-003"]
+    embedding_models = ["models/embedding-001"]
 
     st.session_state.llm_provider = st.selectbox(label="Select a llm provider",options=llm_mapping.keys(),index=0)
     options = llm_mapping[st.session_state.llm_provider]
@@ -56,8 +55,9 @@ if "submitted" not in st.session_state:
         with open(save_path, mode='wb') as w:
             w.write(file.getvalue())
         st.session_state.file_uploaded = True
+    st.session_state.data_description = st.text_input(label="Write a small description about your data",max_chars=200)
       
-    if st.session_state.llm_api_key is None or st.session_state.llm_api_key == "" or st.session_state.file_uploaded == False:
+    if st.session_state.llm_api_key is None or st.session_state.llm_api_key == "" or st.session_state.file_uploaded == False or st.session_state.data_description is None or st.session_state.data_description == "":
       st.button(label="Get Started",disabled=True)
     else:
       st.button(label="Get Started",on_click=onClick)
@@ -75,20 +75,21 @@ else:
       from llama_index.embeddings.gemini import GeminiEmbedding
       from llama_index.core import Settings
       
+      # its hard-coded now change in future
       llm = Gemini(model_name="models/gemini-pro",api_key=st.session_state.llm_api_key)
       embed_model = GeminiEmbedding(model_name = "models/embedding-001",api_key=st.session_state.llm_api_key)
-      Settings.embed_model = embed_model
-      Settings.llm = llm
       
       if "rag" not in st.session_state: 
         match pipeline:
             case "SubQuestionQuerying":
                 rag = SubQuestionQuerying(data_dir="storage/data",
+                                          data_description=st.session_state.data_description,
                                           config=user_config["config"],
                                           llm=llm,
                                           embed_model=embed_model)
             case "ReciprocalRerankFusionRetriever":
                 rag = ReciprocalRerankFusionRetriever(data_dir="storage/data",
+                                                      data_description=st.session_state.data_description,
                                                       config=user_config["config"],
                                                       llm=llm,
                                                       embed_model=embed_model)

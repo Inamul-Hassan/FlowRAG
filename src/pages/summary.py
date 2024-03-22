@@ -12,7 +12,7 @@ config["config"] = st.session_state.selected_pipeline_config
 # create a json file and store the configuration in st.session_state
 import json
 def save_config():
-  with open('user_config.json', 'w') as f:
+  with open('src/pages/user_config.json', 'w') as f:
     json.dump(config, f)
 
 save_config()

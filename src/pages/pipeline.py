@@ -10,7 +10,7 @@ if 'finish_bt' in st.session_state:
 
 import json
 # with open(r'C:\Users\vishal\Documents\AI\RAG pipeline\FlowRAG\config.json') as f:
-with open('E:\Python\Directory\FlowRAG\config.json') as f:
+with open('src/pages/config.json') as f:
     configuration = json.load(f)
 
 pipeline = st.session_state.selected_pipeline

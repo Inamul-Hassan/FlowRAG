@@ -24,7 +24,7 @@ def load_json(file_path):
         data = json.load(f)
       return data
 
-user_config = load_json('user_config.json')
+user_config = load_json('src/pages/user_config.json')
 pipeline = user_config["pipline"]
 
 def onClick():
@@ -122,7 +122,7 @@ else:
         with st.chat_message(name="Human"):
             st.write(user_query)
         with st.spinner("Thinking..."):
-          response = st.session_state.rag.query(user_query, debug = False)
+            response = st.session_state.rag.query(user_query, debug = False)
         with st.chat_message(name="AI"):
             st.write(response)
         

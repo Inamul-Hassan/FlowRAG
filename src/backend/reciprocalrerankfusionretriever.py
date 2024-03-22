@@ -9,15 +9,8 @@ from llama_index.embeddings.gemini import GeminiEmbedding
 
 import backend.utils as utils
 
-# import phoenix as px
-# import llama_index.core
-# llama_index.core.set_global_handler("arize_phoenix")
-# session = px.launch_app()
-
 class ReciprocalRerankFusionRetriever:
-
-    def __init__(self, data_dir: str, config: dict, llm: LLM, embed_model: BaseEmbedding,data_description: str):
-                
+    def __init__(self, data_dir: str, config: dict, llm: LLM, embed_model: BaseEmbedding, data_description: str):
         self.nodes = utils.preprocess(data_dir = data_dir, config = config)
         self.data_description = data_description
         self.config = config
@@ -29,11 +22,11 @@ class ReciprocalRerankFusionRetriever:
             nodes = self.nodes,
             embed_model = self.embed_model,
             vector_config = self.config["storage"], 
-            chat_config = self.config["chat_history"]
+            chat_config = self.config["chat_history"],
+            data_description = self.data_description
         )
 
-    def query(self, query_str: str, debug: bool = False) -> str:
- 
+    def query(self, query_str: str) -> str:
         index, chat_store = utils.load(
             embed_model = self.embed_model,
             db_loc = self.config["storage"]["db_loc"], 
@@ -70,15 +63,9 @@ class ReciprocalRerankFusionRetriever:
             response = response
         )
 
-        # if debug:
-        #     import time
-        #     while True:
-        #         time.sleep(100)
-
         return response
 
 if __name__ == "__main__":
-
     from dotenv import load_dotenv
     load_dotenv()
 
@@ -107,11 +94,13 @@ if __name__ == "__main__":
             }
         },
         llm = llm,
-        embed_model = embed_model
+        embed_model = embed_model,
+        data_description = ""
     )
+
     rag.store()
 
-    print(rag.query("Does he applied to two art schools?", debug = False))
-    print(rag.query("What are those?", debug = False))
-    print(rag.query("Which one is the first?", debug=False))
-    print(rag.query("Which one comes second?", debug=True))
+    print(rag.query("Does he applied to two art schools?"))
+    print(rag.query("What are those?"))
+    print(rag.query("Which one is the first"))
+    print(rag.query("Which one comes secon"))

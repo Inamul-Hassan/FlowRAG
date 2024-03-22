@@ -11,15 +11,8 @@ from llama_index.core.base.embeddings.base import BaseEmbedding
 
 import backend.utils as utils
 
-# import phoenix as px
-# import llama_index.core
-# llama_index.core.set_global_handler("arize_phoenix")
-# session = px.launch_app()
-
 class SubQuestionQuerying:
-
     def __init__(self, data_dir: str, config: dict, llm: LLM, embed_model: BaseEmbedding,data_description: str):
-        
         self.nodes = utils.preprocess(data_dir = data_dir, config = config)
         self.data_description = data_description
         self.config = config
@@ -27,17 +20,15 @@ class SubQuestionQuerying:
         self.embed_model = embed_model
     
     def store(self) -> None:
-        
-
         utils.store(
             nodes = self.nodes,
             embed_model = self.embed_model,
             vector_config = self.config["storage"],
-            chat_config = self.config["chat_history"]
+            chat_config = self.config["chat_history"],
+            data_description = self.data_description
         )
 
-    def query(self, query_str: str, debug: bool = False) -> str:
-
+    def query(self, query_str: str) -> str:
         index, chat_store = utils.load(
             embed_model = self.embed_model,
             db_loc = self.config["storage"]["db_loc"], 
@@ -56,8 +47,8 @@ class SubQuestionQuerying:
             QueryEngineTool(
                 query_engine = vector_query_engine,
                 metadata = ToolMetadata(
-                    name="paul_graham_essay",
-                    description="Paul Graham essay on What I Worked On"
+                    name = f"Knowledge base",
+                    description = self.data_description
                 )
             ),   
         ]
@@ -81,11 +72,6 @@ class SubQuestionQuerying:
             query = query_str,
             response = response
         )
-
-        # if debug:
-        #     import time
-        #     while True:
-        #         time.sleep(100)
 
         return response
 
@@ -119,9 +105,11 @@ if __name__ == "__main__":
             }
         },
         llm = llm,
-        embed_model = embed_model
+        embed_model = embed_model,
+        data_description = ""
     )
+
     rag.store()
 
-    print(rag.query("what made the author interested in the AI?", debug = False))
-    print(rag.query("Eloborate more", debug = True))
+    print(rag.query("what made the author interested in the AI?"))
+    print(rag.query("Eloborate more"))

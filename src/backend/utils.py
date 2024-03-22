@@ -17,7 +17,7 @@ def preprocess(data_dir: str, config: dict):
         
     return nodes
 
-def store(nodes, embed_model, vector_config, chat_config) -> None:
+def store(nodes, embed_model, vector_config, chat_config, data_description) -> None:
     db = chromadb.PersistentClient(path = vector_config["db_loc"])
     chroma_collection = db.get_or_create_collection(name = vector_config["collection_name"])
     vector_store = ChromaVectorStore(chroma_collection = chroma_collection)
@@ -32,7 +32,7 @@ def store(nodes, embed_model, vector_config, chat_config) -> None:
     chat_store = SimpleChatStore()
     chat_store.add_message(chat_config["key"], message= ChatMessage(
                 role=MessageRole.USER,
-                content="Hello assistant, we are having a insightful discussion about Paul Graham today."))
+                content=f"Hello assistant, we are having a insightful discussion about {data_description}"))
     chat_store.add_message(chat_config["key"], message= ChatMessage(
                 role=MessageRole.ASSISTANT, 
                 content="Okay, sounds good."))

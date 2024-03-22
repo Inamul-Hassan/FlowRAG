@@ -1,0 +1,60 @@
+{
+  "SubQuestionQuerying" : {
+    "core": {
+      "llm": {
+        "name": "gemini-pro",
+        "api_key": "xxxxxxxxxxxx"
+      },
+      "embedding": {
+        "name": "embedding-001",
+        "api_key": "xxxxxxxxxxxx"
+      }
+    },
+    "transform": {
+        "chunk_size": 512,
+        "chunk_overlap": 0,
+        "separator": " "
+    },
+    "retriever": {
+        "similarity_top_k": 5,
+        "num_queries": 4
+    },
+    "storage": {
+        "db_loc": "storage/chromadb",
+        "collection_name": "defaultDB"
+    },
+    "chat_history": {
+        "loc": "storage/chat_store.json",
+        "key": "user01"
+    }
+  },
+  "ReciprocalRerankFusionRetriever": {
+    "core": {
+      "llm": {
+        "name": "gemini-pro",
+        "api_key": "xxxxxxxxxxxx"
+      },
+      "embedding": {
+        "name": "embedding-001",
+        "api_key": "xxxxxxxxxxxx"
+      }
+    },
+    "transform": {
+        "chunk_size": 512,
+        "chunk_overlap": 0,
+        "separator": " "
+    },
+    "retriever": {
+        "similarity_top_k": 5,
+        "num_queries": 4
+    },
+    "storage": {
+        "db_loc": "storage/chromadb",
+        "collection_name": "defaultDB"
+    },
+    "chat_history": {
+        "loc": "storage/chat_store.json",
+        "key": "user01"
+    }
+  }
+}

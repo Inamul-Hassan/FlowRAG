@@ -19,31 +19,17 @@ st.markdown("## Select a pipeline")
 
 st.markdown("### For Unstrucutured Data")
 
-with st.expander(label="SubQuestionQuerying",expanded=False):
-    st.write("Sub Question Querying can break down a complex question into to smaller sub question and retreieve relavent data from the provided sources/files(Even multiple files/sources).")
-    st.markdown("#### The main components of the pipeline are,")
-    tab_returend_index = sac.tabs([
-        sac.TabsItem(label='Transform'),
-        sac.TabsItem(label='Indexing'),
-        sac.TabsItem(label='Vector Store'),
-        sac.TabsItem(label='Query engine'),
-        sac.TabsItem(label='Chat store'),
-        sac.TabsItem(label='Sub question query engine'),
-    ], return_index=True,key="sqqe_tab")
+with st.expander(label="SubQuestionQuerying - recommended for multiple data sources",expanded=False):
+    st.markdown("### Sub Question Query Engine")
+    st.markdown("This strategy can be used to tackle the problem of answering a complex query using multiple data sources. It first breaks down the complex query into sub questions for each relevant data source, then gather all the intermediate reponses and synthesizes a final response.")
+    st.markdown("Check out [Sub Question Query Engine](%s)" % r"https://docs.llamaindex.ai/en/stable/examples/query_engine/sub_question_query_engine.html#")
 
     st.button("Get Started",key="sqqe_submit_bt",on_click=onClick, args=("SubQuestionQuerying",),type="primary")
     
-with st.expander(label="ReciprocalRerankFusionRetriever",expanded=False):
-    st.write("@vishal")
-    st.markdown("#### The main components of the pipeline are,")
-    tab_returend_index = sac.tabs([
-        sac.TabsItem(label='Transform'),
-        sac.TabsItem(label='Indexing'),
-        sac.TabsItem(label='Vector Store'),
-        sac.TabsItem(label='Query engine'),
-        sac.TabsItem(label='Chat store'),
-        sac.TabsItem(label='Sub question query engine'),
-    ], return_index=True,key="rrfr_tab")
+with st.expander(label="ReciprocalRerankFusionRetriever - recommended for quality response",expanded=False):
+    st.markdown("### Reciprocal Rerank Fusion Retriever")
+    st.markdown("The retrieved nodes will be reranked according to the Reciprocal Rerank Fusion algorithm demonstrated in this [paper](%s). It provides an effecient method for rerranking retrieval results without excessive computation or reliance on external models." % r"https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf")
+    st.markdown("Check out [Reciprocal Rerank Fusion Retriever](%s)" % r"https://docs.llamaindex.ai/en/stable/examples/retrievers/reciprocal_rerank_fusion.html")
 
     st.button("Get Started",key="rrfr_submit_bt",on_click=onClick, args=("ReciprocalRerankFusionRetriever",),type="primary")
 # st.markdown("### For Structured Data")

@@ -2,6 +2,10 @@ import streamlit as st
 import json
 from pathlib import Path
 
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 st.set_page_config(page_title="FlowRAG", page_icon="💬")
 st.title("FlowRAG")
 st.write("An Advance RAG Pipeline For Your Data")

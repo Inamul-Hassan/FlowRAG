@@ -41,10 +41,10 @@ streamlit run src/app.py
 ```
 
 ## TODO
-- [] Add download button to download the generated pipeline and pipeline config.
-- [] Restructure util file, use class based approach rather than functions.
-- [] Add options to customize the pipeline components (splitter, vector store, and etc)
-- [] Add more RAG pipelines.
+- [ ] Add download button to download the generated pipeline and pipeline config.
+- [ ] Restructure util file, use class based approach rather than functions.
+- [ ] Add options to customize the pipeline components (splitter, vector store, and etc)
+- [ ] Add more RAG pipelines.
 
 ## Contributing
 

@@ -61,8 +61,6 @@ if "submitted" not in st.session_state:
       st.button(label="Get Started",disabled=True)
     else:
       st.button(label="Get Started",on_click=onClick)
-      
-    st.write(st.session_state)
 
 else:
     with st.spinner("Hang On, We are setting up the environment..."):

@@ -45,7 +45,3 @@ with st.expander(label="ReciprocalRerankFusionRetriever - recommended for qualit
 if "selected_pipeline" in st.session_state:
     st.switch_page("pages/data.py")
 
-# Debug
-# with st.expander("Debug"):
-#     st.write(st.session_state)
-

@@ -1,5 +1,5 @@
 # FlowRAG
-A web based GUI tool to create a advanced RAG pipeline.
+A web based GUI tool to create advanced RAG pipelines.
 
 Live Demo: [FlowRAG](https://flowrag.streamlit.app/)
 

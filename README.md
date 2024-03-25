@@ -23,7 +23,7 @@ Once you are done with the configuration, you can download the pipeline code and
 
 ## Avaiable RAG Pipelines
 
-- [Sub Question Querying]("https://docs.llamaindex.ai/en/stable/examples/query_engine/sub_question_query_engine.html)
+- [Sub Question Querying](https://docs.llamaindex.ai/en/stable/examples/query_engine/sub_question_query_engine.html)
 - [Reciprocal Rerank Fusion Retriever](https://docs.llamaindex.ai/en/stable/examples/retrievers/reciprocal_rerank_fusion.html)
 
 ## Installation

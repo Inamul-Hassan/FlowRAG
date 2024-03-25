@@ -15,8 +15,11 @@ This is a developer centric tool. It is meant to be used by developers/enthusias
 
 ![Project Architecture](storage/architecture.png)
 
-We have build the RAG pipelines using llama-index and langchain libraries. The pipeline has some customizable components and some fixed components. While configuring the pipeline, you can customize these components as per your requirements.
-Once you are done with the configuration, you can download the pipeline code and the pipeline configuration file. So that you can run the pipeline locally or your desired environment as well.
+We have build the RAG pipelines using llama-index and langchain libraries.
+
+The pipeline has some customizable components and some fixed components. While configuring the pipeline, you can customize these components as per your requirements.
+Once you are done with the configuration, you can download the pipeline code and the pipeline configuration file which will help in reproducing the same pipeline later point of time. 
+
 
 ## Avaiable RAG Pipelines
 
